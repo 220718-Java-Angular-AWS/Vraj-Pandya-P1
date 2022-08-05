@@ -32,7 +32,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>P1.Main</mainClass>
+                            <mainClass>com.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
