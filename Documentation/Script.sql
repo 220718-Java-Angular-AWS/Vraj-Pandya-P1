@@ -1,5 +1,4 @@
 DROP TABLE users CASCADE;
-SELECT * FROM users
 
 CREATE TABLE users (
 	user_id SERIAL PRIMARY KEY,
@@ -11,8 +10,10 @@ CREATE TABLE users (
 	"role" BOOL
 );
 
+SELECT * FROM users
+
+
 DROP TABLE reimbursements;
-SELECT * FROM reimbursements
 
 CREATE TABLE reimbursements (
 	reimbursement_id SERIAL PRIMARY KEY,
@@ -23,3 +24,5 @@ CREATE TABLE reimbursements (
 	status BOOL,
 	CONSTRAINT reimbursements_users_fk FOREIGN KEY (user_id) REFERENCES users (user_id)
 );
+
+SELECT * FROM reimbursements
