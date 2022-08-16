@@ -32,7 +32,7 @@ public class ReimbursementService {
         return dao.readAll();
     }
 
-    public void updateRequest(Reimbursement reimbursement, Integer reimbursementId) {
+    public void updateReimbursement(Reimbursement reimbursement, Integer reimbursementId) {
         dao.update(reimbursement, reimbursementId);
     }
 
