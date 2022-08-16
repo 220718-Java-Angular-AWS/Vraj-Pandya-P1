@@ -9,12 +9,12 @@ public class User {
     private String email;
     private String username;
     private String password;
-    private String role;
+    private boolean role;
 
     public User() {
     }
 
-    public User(int userId, String firstName, String lastName, String email, String username, String password, String role) {
+    public User(int userId, String firstName, String lastName, String email, String username, String password, boolean role) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -24,13 +24,28 @@ public class User {
         this.role = role;
     }
 
-    public User(String firstName, String lastName, String email, String username, String password, String role) {
+    public User(String firstName, String lastName, String email, String username, String password, boolean role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.username = username;
         this.password = password;
         this.role = role;
+    }
+
+    public User(int userId, String firstName, String lastName, String username, String email, String password) {
+        this.userId = userId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
+
+    public User(String credentials, String password) {
+        this.email = credentials;
+        this.username = credentials;
+        this.password = password;
     }
 
     public int getUserId() {
@@ -81,11 +96,11 @@ public class User {
         this.password = password;
     }
 
-    public String getRole() {
+    public boolean isRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(boolean role) {
         this.role = role;
     }
 
@@ -94,18 +109,17 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return userId == user.userId
+        return Objects.equals(userId, user.userId)
                 && Objects.equals(firstName, user.firstName)
                 && Objects.equals(lastName, user.lastName)
                 && Objects.equals(email, user.email)
                 && Objects.equals(username, user.username)
-                && Objects.equals(password, user.password)
-                && Objects.equals(role, user.role);
+                && Objects.equals(password, user.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, firstName, lastName, email, username, password, role);
+        return Objects.hash(userId, firstName, lastName, email, username, password);
     }
 
     @Override
@@ -117,7 +131,6 @@ public class User {
                 ", email='" + email + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", role='" + role + '\'' +
                 '}';
     }
 }

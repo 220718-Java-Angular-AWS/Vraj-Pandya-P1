@@ -3,148 +3,122 @@ package com.revature.pojos;
 import java.util.Objects;
 
 public class Reimbursement {
-    private int userId;
-    private int amount;
-    private User employee;
-    private User financeManager;
-    private String submitted;
-    private String resolved;
-    private String description;
-    private String receipt;
-    private String status;
-    private String type;
+    private Integer reimbursementId;
+    private String title;
+    private Float amount;
+    private String message;
+    private Integer userId;
+    private Boolean status;
 
-    public Reimbursement(){
+    public Reimbursement() {
     }
 
-    public Reimbursement(int userId, int amount, User employee, User financeManager, String submitted, String resolved, String description, String receipt, String status, String type) {
-        this.userId = userId;
+    public Reimbursement(Integer reimbursementId, String title, Float amount, String message, Integer userId, Boolean status) {
+        this.reimbursementId = reimbursementId;
+        this.title = title;
         this.amount = amount;
-        this.employee = employee;
-        this.financeManager = financeManager;
-        this.submitted = submitted;
-        this.resolved = resolved;
-        this.description = description;
-        this.receipt = receipt;
+        this.message = message;
+        this.userId = userId;
         this.status = status;
-        this.type = type;
     }
 
-    public int getUserId() {
-        return userId;
+    public Reimbursement(String title, Float amount, String message, Integer userId, Boolean status) {
+        this.title = title;
+        this.amount = amount;
+        this.message = message;
+        this.userId = userId;
+        this.status = status;
     }
 
-    public void setUserId(int userId) {
+    public Reimbursement(String title, Float amount, String message, Integer userId) {
+        this.title = title;
+        this.amount = amount;
+        this.message = message;
         this.userId = userId;
     }
 
-    public int getAmount() {
+    public Reimbursement(Integer reimbursementId, String title, Float amount, String message) {
+        this.reimbursementId = reimbursementId;
+        this.title = title;
+        this.amount = amount;
+        this.message = message;
+    }
+
+    public Integer getReimbursementId() {
+        return reimbursementId;
+    }
+
+    public void setReimbursementId(Integer reimbursementId) {
+        this.reimbursementId = reimbursementId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Float getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(Float amount) {
         this.amount = amount;
     }
 
-    public User getEmployee() {
-        return employee;
+    public String getMessage() {
+        return message;
     }
 
-    public void setEmployee(User employee) {
-        this.employee = employee;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
-    public User getFinanceManager() {
-        return financeManager;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setFinanceManager(User financeManager) {
-        this.financeManager = financeManager;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
-    public String getSubmitted() {
-        return submitted;
-    }
-
-    public void setSubmitted(String submitted) {
-        this.submitted = submitted;
-    }
-
-    public String getResolved() {
-        return resolved;
-    }
-
-    public void setResolved(String resolved) {
-        this.resolved = resolved;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getReceipt() {
-        return receipt;
-    }
-
-    public void setReceipt(String receipt) {
-        this.receipt = receipt;
-    }
-
-    public String getStatus() {
+    public Boolean getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Boolean status) {
         this.status = status;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Reimbursement that = (Reimbursement) o;
-        return userId == that.userId
-                && amount == that.amount
-                && Objects.equals(employee, that.employee)
-                && Objects.equals(financeManager, that.financeManager)
-                && Objects.equals(submitted, that.submitted)
-                && Objects.equals(resolved, that.resolved)
-                && Objects.equals(description, that.description)
-                && Objects.equals(receipt, that.receipt)
-                && Objects.equals(status, that.status)
-                && Objects.equals(type, that.type);
+        Reimbursement request = (Reimbursement) o;
+        return Objects.equals(reimbursementId, request.reimbursementId)
+                && Objects.equals(title, request.title)
+                && Objects.equals(amount, request.amount)
+                && Objects.equals(message, request.message)
+                && Objects.equals(userId, request.userId)
+                && Objects.equals(status, request.status);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, amount, employee, financeManager, submitted, resolved, description, receipt, status, type);
+        return Objects.hash(reimbursementId, title, amount, message, userId, status);
     }
 
     @Override
     public String toString() {
-        return "Reimbursement{" +
-                "userId=" + userId +
-                ", amount=" + amount +
-                ", employee=" + employee +
-                ", financeManager=" + financeManager +
-                ", submitted='" + submitted + '\'' +
-                ", resolved='" + resolved + '\'' +
-                ", description='" + description + '\'' +
-                ", receipt='" + receipt + '\'' +
-                ", status='" + status + '\'' +
-                ", type='" + type + '\'' +
+        return "Request{" +
+                "reimbursementId=" + reimbursementId +
+                ", title='" + title + '\'' +
+                ", amount='" + amount + '\'' +
+                ", message='" + message + '\'' +
+                ", userId=" + userId +
+                ", status=" + status +
                 '}';
     }
 }
