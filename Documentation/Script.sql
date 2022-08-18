@@ -21,7 +21,7 @@ CREATE TABLE reimbursements (
 	amount INT NOT NULL,
 	message VARCHAR(2000),
 	user_id INT,
-	"status" VARCHAR(20),
+	complete VARCHAR(20),
 	CONSTRAINT reimbursements_users_fk FOREIGN KEY (user_id) REFERENCES users (user_id)
 );
 
