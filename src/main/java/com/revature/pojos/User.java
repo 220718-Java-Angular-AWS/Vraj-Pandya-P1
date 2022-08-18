@@ -9,28 +9,28 @@ public class User {
     private String email;
     private String username;
     private String password;
-    private boolean role;
+    private boolean admin;
 
     public User() {
     }
 
-    public User(int userId, String firstName, String lastName, String email, String username, String password, boolean role) {
+    public User(int userId, String firstName, String lastName, String email, String username, String password, boolean admin) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.username = username;
         this.password = password;
-        this.role = role;
+        this.admin = admin;
     }
 
-    public User(String firstName, String lastName, String email, String username, String password, boolean role) {
+    public User(String firstName, String lastName, String email, String username, String password, boolean admin) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.username = username;
         this.password = password;
-        this.role = role;
+        this.admin = admin;
     }
 
     public User(int userId, String firstName, String lastName, String username, String email, String password) {
@@ -96,12 +96,12 @@ public class User {
         this.password = password;
     }
 
-    public boolean isRole() {
-        return role;
+    public boolean isAdmin() {
+        return admin;
     }
 
-    public void setRole(boolean role) {
-        this.role = role;
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
     }
 
     @Override

@@ -8,26 +8,26 @@ public class Reimbursement {
     private Float amount;
     private String message;
     private Integer userId;
-    private Boolean status;
+    private String complete;
 
     public Reimbursement() {
     }
 
-    public Reimbursement(Integer reimbursementId, String title, Float amount, String message, Integer userId, Boolean status) {
+    public Reimbursement(Integer reimbursementId, String title, Float amount, String message, Integer userId, String complete) {
         this.reimbursementId = reimbursementId;
         this.title = title;
         this.amount = amount;
         this.message = message;
         this.userId = userId;
-        this.status = status;
+        this.complete = complete;
     }
 
-    public Reimbursement(String title, Float amount, String message, Integer userId, Boolean status) {
+    public Reimbursement(String title, Float amount, String message, Integer userId, String complete) {
         this.title = title;
         this.amount = amount;
         this.message = message;
         this.userId = userId;
-        this.status = status;
+        this.complete = complete;
     }
 
     public Reimbursement(String title, Float amount, String message, Integer userId) {
@@ -84,12 +84,12 @@ public class Reimbursement {
         this.userId = userId;
     }
 
-    public Boolean getStatus() {
-        return status;
+    public String getComplete() {
+        return complete;
     }
 
-    public void setStatus(Boolean status) {
-        this.status = status;
+    public void setComplete(String complete) {
+        this.complete = complete;
     }
 
     @Override
@@ -102,12 +102,12 @@ public class Reimbursement {
                 && Objects.equals(amount, request.amount)
                 && Objects.equals(message, request.message)
                 && Objects.equals(userId, request.userId)
-                && Objects.equals(status, request.status);
+                && Objects.equals(complete, request.complete);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(reimbursementId, title, amount, message, userId, status);
+        return Objects.hash(reimbursementId, title, amount, message, userId, complete);
     }
 
     @Override
@@ -118,7 +118,7 @@ public class Reimbursement {
                 ", amount='" + amount + '\'' +
                 ", message='" + message + '\'' +
                 ", userId=" + userId +
-                ", status=" + status +
+                ", complete=" + complete +
                 '}';
     }
 }

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Users</title>
+</head>
+<body>
+    <form onsubmit="return false">
+        <h3>Find User by ID#</h3>
+        <label>Enter User ID#: </label>
+        <input type="number" placeholder="ID#" id="userId" required>
+        <button type="submit" id="myBtn" onclick="viewIndividualUser(); clrUser()">Find</button>
+        <button type="button" onclick="clrUser()">Clear</button>
+        <button type="button" onclick="getUser(); clrList()">Find All</button>
+        <button type="button" onclick="clrList()">Clear All</button>
+    </form>
+    <br>
+    <table id="individualUser"></table><br><br>
+    <table id="userTable"></table>
+    <button type="submit" onclick="returnMainMenu()">Back</button>
+</body>
+<script>
+    
+    async function getUser() {
+       
+        let url = 'http://localhost:8080/Vraj-Pandya-P1/user';
+        let response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8'
+            }
+        });
+            
+            let array = await response.json();
+            let table = document.getElementById('userTable');
+            table.style.border = "1px solid black";
+            table.style.background = "#8fccf2";
+            
+            table.innerHTML = "<tr><th style='width: 5%; border: 1px solid black'>User ID#</th>" +
+            "<th style='width: 5%; border: 1px solid black'>First Name</th>" +
+            "<th style='width: 20%; border: 1px solid black'>Last Name</th>" +
+            "<th style='width: 10%; border: 1px solid black'>Email</th>" +
+            "<th style='border: 1px solid black'>Username</th></tr>"
+
+            for(let i = 0; i < array.length; i++){
+                let user = array[i];
+                table.innerHTML += "<tr><th style='width: 5%; border: 1px solid black'>" + user.userId +
+                "</th><th style='width: 5%; border: 1px solid black'>" + user.firstName + 
+                "</th> <th style='border: 1px solid black'>" + user.lastName +
+                "</th><th style='width: 10%; border: 1px solid black'>" + user.email +
+                "</th><th style='border: 1px solid black'>" + user.username +
+                "</th></tr>"
+            }
+    };
+    
+    async function viewIndividualUser() {
+        
+        let userId = document.getElementById("userId").value;
+        let url = 'http://localhost:8080/Vraj-Pandya-P1/user?user-id=' + userId;
+        let response = await fetch(url, {
+            method: 'GET',
+            headers:{
+                'Content-Type': 'application/json; charset=utf-8'
+            }
+        });
+        
+        let user = await response.json();
+        let table = document.getElementById('individualUser');
+        
+    
+        table.style.border = "1px solid black";
+        table.style.background = "#8fccf2";
+            
+        table.innerHTML = "<tr><th style='width: 5%; border: 1px solid black'>User ID#</th>" +
+        "<th style='width: 5%; border: 1px solid black'>First Name</th>" +
+        "<th style='width: 20%; border: 1px solid black'>Last Name</th>" +
+        "<th style='width: 10%; border: 1px solid black'>Email</th>" +
+        "<th style='border: 1px solid black'>Username</th></tr>"
+        
+        if(user.firstName != null){
+            table.innerHTML += "<tr><th style='width: 5%; border: 1px solid black'>" + user.userId +
+                "</th><th style='width: 5%; border: 1px solid black'>" + user.firstName + 
+                "</th> <th style='border: 1px solid black'>" + user.lastName +
+                "</th><th style='width: 10%; border: 1px solid black'>" + user.email +
+                "</th><th style='border: 1px solid black'>" + user.username +
+                "</th></tr>"
+            
+        }else{
+            alert("User does not exist!")
+            table.style.border = "none";
+            table.innerHTML = "";
+        }
+        
+        
+    }
+
+    async function clrList() {
+        let table = document.getElementById("userTable");
+        table.style.border = "none";
+        table.innerHTML = "";
+    }
+    
+    async function clrUser(){
+        let table = document.getElementById("individualUser");
+        table.style.border = "none";
+        table.innerHTML = "";
+
+    }
+    async function returnMainMenu() {
+        location.href = 'file:///C:/Users/user/Documents/Revature/Vraj-Pandya-P1/UI/Admin/adminMenu.html';
+    }
+</script>
+</html>

@@ -19,7 +19,7 @@ public class UserDAO implements DatasourceCRUD<User> {
     @Override
     public void create(User user) {
         try {
-            String sql = "INSERT INTO users (first_name, last_name, email, username, password, role)" +
+            String sql = "INSERT INTO users (first_name, last_name, email, username, password, admin)" +
                     " VALUES (?, ?, ?, ?, ?, false)";
             PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pstmt.setString(1, user.getFirstName());
@@ -32,20 +32,17 @@ public class UserDAO implements DatasourceCRUD<User> {
             pstmt.executeUpdate();
             ResultSet keys = pstmt.getGeneratedKeys();
             if(keys.next()) {
-                Integer key = keys.getInt("user_id");
-                System.out.println("Key: " + key);
+                keys.getInt("user_id");
             }
 
-            String defaultRole = "UPDATE users SET role = true WHERE user_id = 1";
-            PreparedStatement pstmtDefaultRole = connection.prepareStatement(defaultRole);
+            String defaultAdmin = "UPDATE users SET admin = true WHERE user_id = 1";
+            PreparedStatement pstmtDefaultadmin = connection.prepareStatement(defaultAdmin);
 
-            pstmtDefaultRole.executeUpdate();
-
+            pstmtDefaultadmin.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
@@ -64,7 +61,7 @@ public class UserDAO implements DatasourceCRUD<User> {
                 user.setEmail(results.getString("email"));
                 user.setUsername(results.getString("username"));
                 user.setPassword(results.getString("password"));
-                user.setRole(results.getBoolean("role"));
+                user.setAdmin(results.getBoolean("admin"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -88,7 +85,7 @@ public class UserDAO implements DatasourceCRUD<User> {
                 user.setEmail(results.getString("email"));
                 user.setUsername(results.getString("username"));
                 user.setPassword(results.getString("password"));
-                user.setRole(results.getBoolean("role"));
+                user.setAdmin(results.getBoolean("admin"));
                 userList.add(user);
             }
 
@@ -119,6 +116,18 @@ public class UserDAO implements DatasourceCRUD<User> {
 
     }
 
+    public void adminUpdate(Integer userId, Boolean admin){
+        try{
+            String sql = "UPDATE users SET admin = ? WHERE user_id = ?";
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setBoolean(1, admin);
+            pstmt.setInt(2, userId);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @Override
     public void delete(int id) {
         try {
@@ -130,12 +139,25 @@ public class UserDAO implements DatasourceCRUD<User> {
             }else{
                 pstmt.executeUpdate();
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
-
+        try {
+            String sql = "DELETE FROM users WHERE user_id = ?";
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setInt(1, id);
+            if(id == 1){
+                throw new Exception();
+            }else{
+                pstmt.executeUpdate();
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (Exception e) {
-            throw new RuntimeException("Cannot delete a primary user!");
+            throw new RuntimeException("Cannot delete a primary user");
         }
     }
 
@@ -157,7 +179,7 @@ public class UserDAO implements DatasourceCRUD<User> {
                 user.setEmail(results.getString("email"));
                 user.setUsername(results.getString("username"));
                 user.setPassword(results.getString("password"));
-                user.setRole(results.getBoolean("role"));
+                user.setAdmin(results.getBoolean("admin"));
 
             } else {
                 throw new Exception("Invalid credentials, please try again.");

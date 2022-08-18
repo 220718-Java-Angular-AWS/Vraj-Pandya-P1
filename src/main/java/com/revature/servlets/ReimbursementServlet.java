@@ -32,20 +32,41 @@ public class ReimbursementServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String reimbursementParam = req.getParameter("reimbursement-id");
+        String userParam = req.getParameter("user-id");
+        String completeParam = req.getParameter("complete");
 
-        if(reimbursementParam == null){
-            List<Reimbursement> reimbursementList = service.getListReimbursement();
+        if (completeParam != null) {
+            List<Reimbursement> reimbursementList = service.readComplete(completeParam);
             String json = mapper.writeValueAsString(reimbursementList);
             resp.getWriter().println(json);
-        }else{
+
+        }else if(reimbursementParam == null) {
+            if (userParam == null) {
+                List<Reimbursement> reimbursementList = service.getListReimbursement();
+                String json = mapper.writeValueAsString(reimbursementList);
+                resp.getWriter().println(json);
+            } else {
+                Integer userId = Integer.parseInt(userParam);
+                List<Reimbursement> reimbursement = service.getReimbursementsForUser(userId);
+                String json = mapper.writeValueAsString(reimbursement);
+                resp.getWriter().println(json);
+            }
+        }else if(userParam == null){
             Integer reimbursementId = Integer.parseInt(reimbursementParam);
             Reimbursement reimbursement = service.getReimbursement(reimbursementId);
+            String json = mapper.writeValueAsString(reimbursement);
+            resp.getWriter().println(json);
+        }else {
+            Integer reimbursementId = Integer.parseInt(reimbursementParam);
+            Integer userId = Integer.parseInt(userParam);
+            Reimbursement reimbursement = service.getSingleReimbursementForUser(reimbursementId, userId);
             String json = mapper.writeValueAsString(reimbursement);
             resp.getWriter().println(json);
         }
 
         resp.setStatus(200);
         resp.setContentType("Application/Json, Charset=UTF-8");
+
     }
 
     @Override
@@ -66,18 +87,32 @@ public class ReimbursementServlet extends HttpServlet {
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String param = req.getParameter("reimbursement-id");
-        Integer reimbursementId = Integer.parseInt(param);
-        StringBuilder builder = new StringBuilder();
-        BufferedReader buffer = req.getReader();
-        while (buffer.ready()){
-            builder.append(buffer.readLine());
+        Integer reimbursementId = Integer.parseInt(req.getParameter("reimbursement-id"));
+        String userParam2 = req.getParameter("user-id");
+        String complete = req.getParameter("complete");
+
+        if(userParam2 == null) {
+            StringBuilder builder = new StringBuilder();
+            BufferedReader buffer = req.getReader();
+            while (buffer.ready()){
+                builder.append(buffer.readLine());
+            }
+            String json = builder.toString();
+            Reimbursement updateReimbursement = mapper.readValue(json, Reimbursement.class);
+
+            service.updateReimbursement(updateReimbursement, reimbursementId, complete);
+        }else{
+            Integer userId = Integer.parseInt(userParam2);
+            StringBuilder builder = new StringBuilder();
+            BufferedReader buffer = req.getReader();
+            while (buffer.ready()){
+                builder.append(buffer.readLine());
+            }
+            String json = builder.toString();
+            Reimbursement updateReimbursement = mapper.readValue(json, Reimbursement.class);
+
+            service.updateReimbursementById(updateReimbursement, reimbursementId, userId);
         }
-
-        String json = builder.toString();
-        Reimbursement updateReimbursement = mapper.readValue(json, Reimbursement.class);
-
-        service.updateReimbursement(updateReimbursement, reimbursementId);
 
         resp.setStatus(200);
         resp.setContentType("Application/Json, Charset=UTF-8");

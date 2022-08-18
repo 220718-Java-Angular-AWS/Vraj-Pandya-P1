@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Reimbursement</title>
+</head>
+<body>
+    <form onsubmit="return false">
+        <h1>New Reimbursement</h1>
+        <label>Title</label>
+        <br>
+        <input type="text" id="title" style="width: 500px;" required>
+        <br><br>
+        <label>Amount: </label>
+        <input type="number" id="amount" min="0" maxlength="100000" step=".01">
+        <br><br>
+        <label>Message</label>
+        <br>
+        <textarea type="text" rows="6" cols="100" id="message" required></textarea>
+        <br>
+        <button type="submit" id="btn" onclick="newReimbursement()">Submit</button>
+    </form>
+    <button type="button" onclick="returnMainMenu()">Back</button>
+</body>
+<script>
+    let currentUserId = window.localStorage.getItem('userId');
+    let currentUserStatus = localStorage.getItem('admin');
+    async function newReimbursement(){
+        let reimbursement = {
+            title: document.getElementById("title").value,
+            amount: document.getElementById("amount").value,
+            message: document.getElementById("message").value,
+            userId: currentUserId,
+        }
+
+        if(reimbursement.title.length == 0) {
+            alert("Field \"Title\" cannot be empty");
+            throw "Field cannot be empty!"
+        }
+        if(reimbursement.amount.length == 0) {
+            alert("Field \"Amount\" cannot be empty");
+            throw "Field cannot be empty!"
+        }
+        if(reimbursement.message.length == 0) {
+            alert("Field \"Message\" cannot be empty");
+            throw "Field cannot be empty!"
+        }
+        let url = 'http://localhost:8080/Vraj-Pandya-P1/reimbursement';
+        let response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8'
+            },
+            body: JSON.stringify(reimbursement)
+        });
+        if(response.status == 200){
+            alert("Reimbursement Added");
+            location.href = 'file:///C:/Users/user/Documents/Revature/Vraj-Pandya-P1/UI/User/mainMenu.html';
+        }
+    }
+
+    async function returnMainMenu() {
+        location.href = 'file:///C:/Users/user/Documents/Revature/Vraj-Pandya-P1/UI/User/mainMenu.html'
+    }
+</script>
+</html>

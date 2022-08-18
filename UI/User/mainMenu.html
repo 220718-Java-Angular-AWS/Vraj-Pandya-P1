@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Menu</title>
+</head>
+<body>
+    <h1>User Menu</h1>
+    <button type="button" onclick="newReimbursement()">New Reimbursement</button><br><br>
+    <button type="button" onclick="viewReimbursements()">View Reimbursements</button><br><br>
+    <button type="button" onclick="editReimbursements()">Edit Reimbursements</button><br><br>
+    <button type="button" onclick="deleteReimbursements()">Delete Reimbursements</button><br><br>
+
+    <button type="button" onclick="logOut()">Log Out</button>
+   
+</body>
+<script>
+    async function newReimbursement() {
+        location.href = "file:///C:/Users/user/Documents/Revature/Vraj-Pandya-P1/UI/User/newReimbursement.html"
+    }
+    async function viewReimbursements() {
+        location.href = "file:///C:/Users/user/Documents/Revature/Vraj-Pandya-P1/UI/User/viewReimbursements.html"
+    }
+    async function editReimbursements() {
+        location.href = "file:///C:/Users/user/Documents/Revature/Vraj-Pandya-P1/UI/User/editReimbursement.html"
+    }
+    async function deleteReimbursements() {
+        location.href = "file:///C:/Users/user/Documents/Revature/Vraj-Pandya-P1/UI/User/deleteReimbursement.html"
+    }
+    
+    async function logOut() {
+        window.localStorage.clear();
+        location.href = "file:///C:/Users/user/Documents/Revature/Vraj-Pandya-P1/UI/Guest/LogIn.html"
+    }
+</script>
+</html>
